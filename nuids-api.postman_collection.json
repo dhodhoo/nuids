@@ -1,0 +1,254 @@
+{
+	"info": {
+		"name": "Nuids API",
+		"description": "API untuk Nuids - Smart Stunting Prevention Tracker\n\nBase URL: http://localhost/nuids/backend/api\n\nSetelah login/register, token otomatis tersimpan di variable {{token}}.\nSetelah create child, child_id otomatis tersimpan.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "base_url", "value": "http://localhost/nuids/backend/api" },
+		{ "key": "token", "value": "" },
+		{ "key": "child_id", "value": "" },
+		{ "key": "checkup_id", "value": "" }
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"exec": [
+								"var jsonData = pm.response.json();",
+								"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+								"    pm.collectionVariables.set('token', jsonData.data.token);",
+								"}"
+							],
+							"type": "text/javascript"
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\"name\":\"Neisya Adrillia P.R\",\"email\":\"neisya@gmail.com\",\"password\":\"rahasia123\",\"phone\":\"08123456789\"}" },
+						"url": { "raw": "{{base_url}}/auth/register", "host": ["{{base_url}}"], "path": ["auth","register"] }
+					}
+				},
+				{
+					"name": "Login",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"exec": [
+								"var jsonData = pm.response.json();",
+								"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+								"    pm.collectionVariables.set('token', jsonData.data.token);",
+								"}"
+							],
+							"type": "text/javascript"
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\"email\":\"neisya@gmail.com\",\"password\":\"rahasia123\"}" },
+						"url": { "raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth","login"] }
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth","me"] }
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/auth/logout", "host": ["{{base_url}}"], "path": ["auth","logout"] }
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"name\":\"Nama Baru\",\"phone\":\"08123456788\"}" },
+						"url": { "raw": "{{base_url}}/auth/update-profile", "host": ["{{base_url}}"], "path": ["auth","update-profile"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Children",
+			"item": [
+				{
+					"name": "Create Child",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"exec": [
+								"var jsonData = pm.response.json();",
+								"if (jsonData.success && jsonData.data && jsonData.data.id) {",
+								"    pm.collectionVariables.set('child_id', String(jsonData.data.id));",
+								"}"
+							],
+							"type": "text/javascript"
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"name\":\"Vera Putri Reska\",\"birthDate\":\"2023-01-15\",\"gender\":\"female\",\"birthWeight\":3.2,\"birthHeight\":48.5,\"allergies\":[\"telur\"],\"texture\":\"lembut\",\"budget\":20000,\"budgetMode\":\"harian\",\"availableIngredients\":[\"Nasi\",\"Ayam\",\"Tahu\",\"Tempe\"]}" },
+						"url": { "raw": "{{base_url}}/children/create", "host": ["{{base_url}}"], "path": ["children","create"] }
+					}
+				},
+				{
+					"name": "List Children",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/children", "host": ["{{base_url}}"], "path": ["children"] }
+					}
+				},
+				{
+					"name": "Get Child by ID",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/children/{{child_id}}", "host": ["{{base_url}}"], "path": ["children","{{child_id}}"] }
+					}
+				},
+				{
+					"name": "Update Child",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"budget\":30000,\"texture\":\"cincang\",\"allergies\":[\"telur\",\"susu\"],\"availableIngredients\":[\"Nasi\",\"Ayam\",\"Tahu\",\"Tempe\",\"Wortel\"]}" },
+						"url": { "raw": "{{base_url}}/children/{{child_id}}/update", "host": ["{{base_url}}"], "path": ["children","{{child_id}}","update"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Checkups",
+			"item": [
+				{
+					"name": "Create Checkup",
+					"event": [{
+						"listen": "test",
+						"script": {
+							"exec": [
+								"var jsonData = pm.response.json();",
+								"if (jsonData.success && jsonData.data && jsonData.data.id) {",
+								"    pm.collectionVariables.set('checkup_id', String(jsonData.data.id));",
+								"}"
+							],
+							"type": "text/javascript"
+						}
+					}],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"child_id\":{{child_id}},\"week\":18,\"date\":\"2024-05-12\",\"height\":76.5,\"weight\":9.2,\"status\":\"aman\",\"meal\":\"baik\",\"condition\":[\"sehat\"],\"notes\":\"Pertumbuhan sangat baik.\"}" },
+						"url": { "raw": "{{base_url}}/checkups/create", "host": ["{{base_url}}"], "path": ["checkups","create"] }
+					}
+				},
+				{
+					"name": "List Checkups",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/checkups?child_id={{child_id}}", "host": ["{{base_url}}"], "path": ["checkups"], "query": [{ "key": "child_id", "value": "{{child_id}}" }] }
+					}
+				},
+				{
+					"name": "Get Checkup by ID",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/checkups/{{checkup_id}}", "host": ["{{base_url}}"], "path": ["checkups","{{checkup_id}}"] }
+					}
+				},
+				{
+					"name": "Update Checkup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"height\":77.0,\"weight\":9.5,\"status\":\"aman\",\"meal\":\"baik\"}" },
+						"url": { "raw": "{{base_url}}/checkups/{{checkup_id}}/update", "host": ["{{base_url}}"], "path": ["checkups","{{checkup_id}}","update"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Meal Plans",
+			"item": [
+				{
+					"name": "Create Meal Plan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"child_id\":{{child_id}},\"date\":\"2024-05-12\",\"budget\":20000,\"allergies\":[\"telur\"],\"aiNote\":\"Menu ini kaya akan Zat Besi untuk mendukung pertumbuhan tinggi badan.\",\"meals\":[{\"type\":\"sarapan\",\"label\":\"Sarapan\",\"name\":\"Bubur Beras Merah Hati Ayam\",\"time\":\"08:00 WIB\"},{\"type\":\"siang\",\"label\":\"Makan Siang\",\"name\":\"Nasi Tim Wortel & Tempe\",\"time\":\"12:30 WIB\"},{\"type\":\"malam\",\"label\":\"Makan Malam\",\"name\":\"Sup Labu Kuning Daging Giling\",\"time\":\"18:30 WIB\"},{\"type\":\"camilan\",\"label\":\"Camilan\",\"name\":\"Puree Pepaya & Pisang\",\"time\":\"15:30 WIB\"}],\"ingredients\":[\"Beras Merah\",\"Hati Ayam\",\"Wortel\",\"Tempe\",\"Labu Kuning\",\"Daging Giling\"]}" },
+						"url": { "raw": "{{base_url}}/meal-plans/create", "host": ["{{base_url}}"], "path": ["meal-plans","create"] }
+					}
+				},
+				{
+					"name": "Get Meal Plan by Date",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/meal-plans?child_id={{child_id}}&date=2024-05-12", "host": ["{{base_url}}"], "path": ["meal-plans"], "query": [{ "key": "child_id", "value": "{{child_id}}" }, { "key": "date", "value": "2024-05-12" }] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": { "mode": "raw", "raw": "{\"child_id\":{{child_id}},\"role\":\"user\",\"text\":\"Anak saya 14 bulan. Berat badannya 8,5 kg. Apakah normal?\"}" },
+						"url": { "raw": "{{base_url}}/chat/create", "host": ["{{base_url}}"], "path": ["chat","create"] }
+					}
+				},
+				{
+					"name": "List Messages",
+					"request": {
+						"method": "GET",
+						"header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+						"url": { "raw": "{{base_url}}/chat?child_id={{child_id}}", "host": ["{{base_url}}"], "path": ["chat"], "query": [{ "key": "child_id", "value": "{{child_id}}" }] }
+					}
+				}
+			]
+		}
+	]
+}
