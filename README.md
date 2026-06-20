@@ -1,4 +1,4 @@
-# Nuids — Smart Stunting Prevention Tracker
+# Nuids : Smart Stunting Prevention Tracker
 
 > Aplikasi web untuk membantu orang tua memantau pertumbuhan anak, mendeteksi risiko stunting sejak dini, dan mendapatkan rekomendasi gizi.
 
