@@ -34,13 +34,13 @@ Hasil build ada di `frontend/dist/`. Folder ini yang akan di-upload.
 2. Cari menu **MySQL Databases** atau **Database Wizard**
 3. Buat database baru, misal: `nuids_db`
 4. Buat user database, misal: `nuids_user`
-5. Kasih password, misal: `Rahasia123!`
+5. Kasih password, misal: `(password_kuat_kamu)`
 6. Tambahkan user ke database dengan **All Privileges**
 
 Catat:
 - Nama database: `nuids_db`
 - Username: `nuids_user`
-- Password: `Rahasia123!`
+- Password: `(password_kuat_kamu)`
 - Host: `localhost` (biasanya)
 
 ---
@@ -108,7 +108,7 @@ Setelah connect, upload:
 ```php
 'hostname' => 'localhost',
 'username' => 'nuids_user',     // ganti dengan username database
-'password' => 'Rahasia123!',     // ganti dengan password database
+'password' => '(isi_password_database)',     // ganti dengan password database
 'database' => 'nuids_db',        // ganti dengan nama database
 ```
 
@@ -123,7 +123,7 @@ $config['base_url'] = 'https://domainkamu.com/backend/';
 
 ```php
 $config['ai_api_url'] = 'https://deepseek-api.nexaworks.me/api/nuids';
-$config['ai_api_key'] = 'nuids-dev-key-2024';
+$config['ai_api_key'] = '(isi_api_key_ai)';
 ```
 
 ### 5d. Edit `backend/.htaccess`

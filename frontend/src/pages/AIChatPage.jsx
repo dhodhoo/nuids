@@ -16,7 +16,7 @@ ATURAN:
 4. Jika user menyebut kondisi serius, sarankan konsultasi ke tenaga kesehatan`
 
 async function callAi(conversation) {
-  const res = await fetch('http://localhost/nuids/backend/api/chat/custom', {
+  const res = await fetch('/backend/api/chat/custom', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + api.getToken() },
     body: JSON.stringify({ systemPrompt: SYSTEM_PROMPT, conversation }),

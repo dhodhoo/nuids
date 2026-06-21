@@ -4,6 +4,8 @@ dist/
 .idea/
 *.log
 .DS_Store
+.env
+docker/.env
 backend/application/cache/*
 !backend/application/cache/index.html
 backend/application/logs/*

@@ -1,0 +1,18 @@
+FROM php:8.3-apache
+
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+RUN a2enmod rewrite
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+
+# Fix session path (CodeIgniter 3 needs writable session directory)
+RUN mkdir -p /tmp/ci_sessions && chmod 777 /tmp/ci_sessions
+
+# Disable PHP warnings/errors from polluting JSON output
+RUN { \
+    echo 'session.save_path = "/tmp/ci_sessions"'; \
+    echo 'display_errors = 0'; \
+    echo 'error_reporting = E_ALL & ~E_DEPRECATED & ~E_WARNING & ~E_NOTICE'; \
+} > /usr/local/etc/php/conf.d/nuids.ini
+
+COPY . /var/www/html/
+RUN chown -R www-data:www-data /var/www/html

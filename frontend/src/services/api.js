@@ -22,7 +22,7 @@
 import axios from 'axios'
 
 // Alamat backend Nuids (CodeIgniter)
-const BASE_URL = 'http://localhost/nuids/backend/api'
+const BASE_URL = '/backend/api'
 
 /**
  * Buat instance Axios dengan konfigurasi dasar.
