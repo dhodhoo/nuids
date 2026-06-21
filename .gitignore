@@ -6,6 +6,7 @@ dist/
 .DS_Store
 .env
 docker/.env
+*.pdf
 backend/application/cache/*
 !backend/application/cache/index.html
 backend/application/logs/*
