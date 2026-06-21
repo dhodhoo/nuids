@@ -32,6 +32,24 @@ export default function InputDataAwalPage() {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
 
+  function toggleAlergi(item) {
+    setForm((prev) => ({
+      ...prev,
+      alergi: prev.alergi.includes(item)
+        ? prev.alergi.filter((a) => a !== item)
+        : [...prev.alergi, item],
+    }))
+  }
+
+  function toggleBahan(item) {
+    setForm((prev) => ({
+      ...prev,
+      bahan: prev.bahan.includes(item)
+        ? prev.bahan.filter((b) => b !== item)
+        : [...prev.bahan, item],
+    }))
+  }
+
   async function handleSave() {
     if (!form.nama || !form.tanggalLahir || !form.gender) {
       setError('Nama, tanggal lahir, dan jenis kelamin wajib diisi')
@@ -85,26 +103,26 @@ export default function InputDataAwalPage() {
         <div className="flex-1 overflow-y-auto px-4 pt-4 pb-4">
           {step === 1 && (
             <StepBasicInfo
-              nama={form.nama} setNama={(v) => set('nama', v)}
-              tanggalLahir={form.tanggalLahir} setTanggalLahir={(v) => set('tanggalLahir', v)}
-              gender={form.gender} setGender={(v) => set('gender', v)}
-              beratLahir={form.beratLahir} setBeratLahir={(v) => set('beratLahir', v)}
-              tinggiLahir={form.tinggiLahir} setTinggiLahir={(v) => set('tinggiLahir', v)}
+              nama={form.nama} onNamaChange={(v) => set('nama', v)}
+              tanggalLahir={form.tanggalLahir} onTanggalLahirChange={(v) => set('tanggalLahir', v)}
+              gender={form.gender} onGenderChange={(v) => set('gender', v)}
+              beratLahir={form.beratLahir} onBeratLahirChange={(v) => set('beratLahir', v)}
+              tinggiLahir={form.tinggiLahir} onTinggiLahirChange={(v) => set('tinggiLahir', v)}
             />
           )}
           {step === 2 && (
             <StepAllergies
-              alergi={form.alergi} setAlergi={(v) => set('alergi', v)}
-              alergiLain={form.alergiLain} setAlergiLain={(v) => set('alergiLain', v)}
-              tekstur={form.tekstur} setTekstur={(v) => set('tekstur', v)}
+              alergi={form.alergi} onToggleAlergi={toggleAlergi}
+              alergiLain={form.alergiLain} onAlergiLainChange={(v) => set('alergiLain', v)}
+              tekstur={form.tekstur} onTeksturChange={(v) => set('tekstur', v)}
             />
           )}
           {step === 3 && (
             <StepBudget
-              budgetMode={form.budgetMode} setBudgetMode={(v) => set('budgetMode', v)}
-              budget={form.budget} setBudget={(v) => set('budget', v)}
-              bahan={form.bahan} setBahan={(v) => set('bahan', v)}
-              bahanLain={form.bahanLain} setBahanLain={(v) => set('bahanLain', v)}
+              budgetMode={form.budgetMode} onBudgetModeChange={(v) => set('budgetMode', v)}
+              budget={form.budget} onBudgetChange={(v) => set('budget', v)}
+              bahan={form.bahan} onToggleBahan={toggleBahan}
+              bahanLain={form.bahanLain} onBahanLainChange={(v) => set('bahanLain', v)}
             />
           )}
         </div>

@@ -27,7 +27,7 @@ export default function RegisterPage() {
   async function onSubmit(data) {
     try {
       await signup(data.name, data.email, data.password, data.phone)
-      navigate('/consent')
+      window.location.href = '/consent'
     } catch (err) {
       setError('root', { message: err.message })
     }

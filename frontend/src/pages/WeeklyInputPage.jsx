@@ -52,10 +52,7 @@ export default function WeeklyInputPage() {
   const condition = useWatch({ control, name: 'condition' }) || []
 
   function toggleCondition(item) {
-    const next = condition.includes(item)
-      ? condition.filter((c) => c !== item)
-      : [...condition, item]
-    setValue('condition', next)
+    setValue('condition', [item])
   }
 
   async function onSubmit(data) {
